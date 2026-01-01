@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# DNS server IP address
+serverIP=192.168.100.24
+
+# DNS clients IP addresses
+clientIPs=("192.168.100.22" "192.168.100.23")
