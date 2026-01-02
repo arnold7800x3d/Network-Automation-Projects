@@ -1,0 +1,37 @@
+acl internal-network {
+    192.168.100.0/24;
+}; 
+
+options {
+    directory "/var/cache/bind";
+
+    // who is allowed to query this server
+    allow-query {
+        localhost;
+        internal-network;
+    };
+
+    // which hosts can request full zone file transfers
+    allow-transfer {
+        localhost;
+    };
+
+    // allows the dns to query other dns servers
+    recursion yes;
+
+    forwarders {
+        192.168.100.1;
+        8.8.8.8;
+    };
+
+    dnssec-validation auto;
+
+    listen-on port 53 {
+        any;
+    };
+
+    listen-on-v6 {
+        none;
+    };
+
+};

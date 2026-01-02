@@ -1,0 +1,16 @@
+zone "asl.com" IN {
+    type primary;
+    file "/etc/bind/db.asl.com";
+    allow-update {
+        none;
+    };
+};
+
+zone "100.168.192.in-addr.arpa" {
+    type primary;
+    file "/etc/bind/db.100.168.192";
+    allow-update {
+        none;
+    };
+};
+
