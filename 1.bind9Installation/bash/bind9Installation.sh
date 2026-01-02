@@ -33,8 +33,8 @@ setupBind9Server(){
     echo -e "Subtask 2.2 Verifying installation...\n"
     ssh $serverIPAddress "systemctl status bind9"
 
-    echo -e "Subtask 2.3 Editing the base configuration file /etc/bind/named.conf...\n"
-    ssh $serverIPAddress 'echo "include \"/etc/bind/named.conf.internal-zones\";" >> /etc/bind/named.conf'
+    echo -e "Subtask 2.3 Configuring the base configuration file /etc/bind/named.conf...\n"
+    rsync -avz /home/netadmin/networkAutomationProjects/1.bind9Installation/templates/named.conf $serverIPAddress:/etc/bind/named.conf
     ssh $serverIPAddress "cat /etc/bind/named.conf"
 
     echo -e "Subtask 2.4 Configuring DNS forwarders and various DNS options...\n"
@@ -67,4 +67,26 @@ setupBind9Server(){
     ssh $serverIPAddress "systemctl status bind9"
 }
 
+# updating clients to use the newly configured DNS server and verifying resolution
+echo -e "Task 3 Updating clients 1 and 2 to use the DNS server...\n"
+verifyClientResolution(){
+    local clientIPAddress=$1
+
+    echo -e "Subtask 3.1 Updating resolution file. Note this update is temporary, network changes will result in a change in this file...\n"
+    ssh $clientIPAddress "sed -i '2 i\nameserver 192.168.100.24' /etc/resolv.conf"
+    ssh $clientIPAddress "cat /etc/resolv.conf"
+
+    echo -e "Subtask 3.2 Verifying resolution...\n"
+    ssh $clientIPAddress "nslookup dns.asl.com"
+    ssh $clientIPAddress "dig dns.asl.com"
+    ssh $clientIPAddress "nslookup 192.168.100.24"
+    ssh $clientIPAddress "dig -x 192.168.100.24"
+}
+
+# main execution section
 setupBind9Server $serverIP
+for nodeIP in "${clientIPs[@]}";
+do
+    verifyClientResolution $nodeIP
+done
+ 
