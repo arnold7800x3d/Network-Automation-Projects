@@ -1,6 +1,0 @@
-[dnsServer]
-dnsServer1 ansible_host=192.168.100.24
-
-[dnsClients]
-dnsClient1 ansible_host=192.168.100.22
-dnsClient2 ansible_host=192.168.100.23
