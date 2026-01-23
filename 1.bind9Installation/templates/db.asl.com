@@ -10,6 +10,6 @@ $TTL	604800
 			 604800 )	; Negative Cache TTL
 ;
 @	IN	NS	asl.cns.
-@	IN	A	192.168.100.24
+@	IN	A	192.168.100.25
 
-dns IN  A   192.168.100.24
+dns IN  A   192.168.100.25
