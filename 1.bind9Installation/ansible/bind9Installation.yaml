@@ -1,15 +1,16 @@
 ---
 - name: Install and configure Bind9 DNS server
-  hosts: dnsServer
+  hosts: dnsServers
   become: true
   tasks:
     - name: Check health status of DNS server
       ansible.builtin.ping:
 
-    - name: Update the server's cache
+    - name: Update the server's repository index
       apt:
         update_cache: yes
 
     - name: Install Bind9
       apt:
-        name:
+        name: bind9
+        state: latest
