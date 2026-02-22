@@ -1,6 +1,6 @@
-zone "asl.com" IN {
+zone "homelab.com" IN {
     type primary;
-    file "/etc/bind/db.asl.com";
+    file "/etc/bind/db.homelab.com";
     allow-update {
         none;
     };
