@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# mosquitto MQTT server IP address
+mqttServerIP=192.168.100.24
