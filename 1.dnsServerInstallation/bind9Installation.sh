@@ -4,7 +4,7 @@
 set -euo pipefail
 
 # read from the inventory file
-source /home/netadmin/networkAutomationProjects/1.dnsServerInstallation/inventory/inventory.txt
+source /home/netautomator/networkAutomationProjects/1.dnsServerInstallation/inventory/inventory.txt
 
 echo -e "Loaded server IP address: $serverIP\n"
 echo -e "Loaded client IP addresses: ${clientIPs[*]}\n"
@@ -36,18 +36,18 @@ setupBind9Server(){
     ssh $serverIPAddress "systemctl status bind9 --no-pager"
 
     echo -e "Subtask 2.3 Configuring the base configuration file /etc/bind/named.conf...\n"
-    rsync -avz /home/netadmin/networkAutomationProjects/1.dnsServerInstallation/templates/named.conf $serverIPAddress:/etc/bind/named.conf
+    rsync -avz /home/netautomator/networkAutomationProjects/1.dnsServerInstallation/templates/named.conf $serverIPAddress:/etc/bind/named.conf
     ssh $serverIPAddress "cat /etc/bind/named.conf"
 
     echo -e "Subtask 2.4 Configuring DNS forwarders and various DNS options...\n"
-    rsync -avz /home/netadmin/networkAutomationProjects/1.dnsServerInstallation/templates/named.conf.options $serverIPAddress:/etc/bind/named.conf.options
+    rsync -avz /home/netautomator/networkAutomationProjects/1.dnsServerInstallation/templates/named.conf.options $serverIPAddress:/etc/bind/named.conf.options
     ssh $serverIPAddress "cat /etc/bind/named.conf.options"
 
     echo -e "Subtask 2.5 Adding zone for the domain...\n"
-    rsync -avz /home/netadmin/networkAutomationProjects/1.dnsServerInstallation/templates/named.conf.internal-zones $serverIPAddress:/etc/bind/named.conf.internal-zones
+    rsync -avz /home/netautomator/networkAutomationProjects/1.dnsServerInstallation/templates/named.conf.internal-zones $serverIPAddress:/etc/bind/named.conf.internal-zones
     
     echo -e "Subtask 2.6 Creating the zone file...\n"
-    rsync -avz /home/netadmin/networkAutomationProjects/1.dnsServerInstallation/templates/db.homelab.com $serverIPAddress:/etc/bind/db.homelab.com
+    rsync -avz /home/netautomator/networkAutomationProjects/1.dnsServerInstallation/templates/db.homelab.com $serverIPAddress:/etc/bind/db.homelab.com
     ssh $serverIPAddress "ls /etc/bind/"
 
     echo -e "Subtask 2.7 Updating the serial number of the zone file...\n"
@@ -55,7 +55,7 @@ setupBind9Server(){
     ssh $serverIPAddress "cat /etc/bind/db.homelab.com"
 
     echo -e "Subtask 2.8 Creating the reverse lookup file...\n"
-    rsync -avz /home/netadmin/networkAutomationProjects/1.dnsServerInstallation/templates/db.100.168.192 $serverIPAddress:/etc/bind/db.100.168.192
+    rsync -avz /home/netautomator/networkAutomationProjects/1.dnsServerInstallation/templates/db.100.168.192 $serverIPAddress:/etc/bind/db.100.168.192
     ssh $serverIPAddress "ls /etc/bind"
 
     echo -e "Subtask 2.9 Updating the serial number of the reverse lookup file...\n"

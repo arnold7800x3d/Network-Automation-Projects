@@ -4,7 +4,7 @@
 set -euo pipefail
 
 # read from the inventory file
-source /home/netadmin/networkAutomationProjects/2.mqttServerInstallation/inventory/inventory.txt
+source /home/netautomator/Network-Automation-Projects/2.mqttServerInstallation/inventory/inventory.txt
 
 echo -e "Loaded server IP addresses: $mqttServerIP\n"
 
@@ -25,23 +25,25 @@ setupMosquittoMQTTServer(){
     ssh $serverIPAddress "systemctl status mosquitto --no-pager"
 
     echo -e "Subtask 2.3 Setting up basic configuration...\n"
-    rsync -avz /home/netadmin/networkAutomationProjects/2.mqttServerInstallation/templates/mosquitto.conf $serverIPAddress:/etc/mosquitto/mosquitto.conf  
+    rsync -avz /home/netautomator/Network-Automation-Projects/2.mqttServerInstallation/templates/mosquitto.conf $serverIPAddress:/etc/mosquitto/mosquitto.conf  
     ssh $serverIPAddress "cat /etc/mosquitto/mosquitto.conf"
 
     echo -e "Subtask 2.4 Configuring authentication. Set up your user by creating a password...\n"
     ssh $serverIPAddress "mosquitto_passwd -c /etc/mosquitto/passwd Arnold"
 
-    echo -e "Subtask 2.5 Fix file permissions to allow mosquitto to read password file...\n"
-    ssh $serverIPAddress "chown mosquitto: /etc/mosquitto/passwd"
-    ssh $serverIPAddress "chmod 600 /etc/mosquitto/passwd"  
+    echo -e "Subtask 2.5 Fix file permissions for the password file...\n"
+    ssh $serverIPAddress "chown root:mosquitto /etc/mosquitto/passwd"
+    ssh $serverIPAddress "chmod 640 /etc/mosquitto/passwd"  
 
     echo -e "Subtask 2.6 Setting up certificates for TLS support...\n"
-    rsync -avz /home/netadmin/networkAutomationProjects/2.mqttServerInstallation/templates/certs/ $serverIPAddress:/etc/mosquitto/certs/  
+    rsync -avz /home/netautomator/Network-Automation-Projects/2.mqttServerInstallation/templates/certs/ $serverIPAddress:/etc/mosquitto/certs/  
 
-    echo -e "Subtask 2.7 Fix file permissions to allow mosquitto to read certificates...\n"
+    echo -e "Subtask 2.7 Fixing file permissions to allow mosquitto to read certificates...\n"
     ssh $serverIPAddress "chown -R mosquitto: /etc/mosquitto/certs"
     ssh $serverIPAddress "chmod 644 /etc/mosquitto/certs/ca.crt /etc/mosquitto/certs/server.crt"
     ssh $serverIPAddress "chmod 600 /etc/mosquitto/certs/server.key"
+    
+    echo -e "Subtask 2.8 Restarting the mosquitto service to apply changes...\n"
     ssh $serverIPAddress "systemctl restart mosquitto"
     ssh $serverIPAddress "systemctl status mosquitto --no-pager"    
 }

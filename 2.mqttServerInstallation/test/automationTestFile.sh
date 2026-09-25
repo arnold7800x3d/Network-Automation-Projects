@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # convert files to UNIX format
-dos2unix /home/netadmin/networkAutomationProjects/2.mqttServerInstallation/inventory/inventory.txt
-dos2unix /home/netadmin/networkAutomationProjects/2.mqttServerInstallation/mosquittoInstallation.sh
+dos2unix /home/netautomator/Network-Automation-Projects/2.mqttServerInstallation/inventory/inventory.txt
+dos2unix /home/netautomator/Network-Automation-Projects/2.mqttServerInstallation/mosquittoInstallation.sh
 
 # make files executable
-chmod u+x /home/netadmin/networkAutomationProjects/2.mqttServerInstallation/inventory/inventory.txt
-chmod u+x /home/netadmin/networkAutomationProjects/2.mqttServerInstallation/mosquittoInstallation.sh
+chmod u+x /home/netautomator/Network-Automation-Projects/2.mqttServerInstallation/inventory/inventory.txt
+chmod u+x /home/netautomator/Network-Automation-Projects/2.mqttServerInstallation/mosquittoInstallation.sh
 
 # run automation file
-/home/netadmin/networkAutomationProjects/2.mqttServerInstallation/mosquittoInstallation.sh
+/home/netautomator/Network-Automation-Projects/2.mqttServerInstallation/mosquittoInstallation.sh
 
