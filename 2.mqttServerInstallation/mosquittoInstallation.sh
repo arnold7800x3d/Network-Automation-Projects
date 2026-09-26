@@ -49,5 +49,5 @@ setupMosquittoMQTTServer(){
 }
 
 # main execution section
-echo -e "Subtask 2. Installing and configuring mosquitto MQTT...\n"
+echo -e "Task 2. Installing and configuring mosquitto MQTT...\n"
 setupMosquittoMQTTServer $mqttServerIP
